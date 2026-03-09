@@ -20,7 +20,17 @@ added 3 enemies
 
 added enemy path for enemies to follow
 
+-use waypoints to guide enemies and has a line to show pathing using gizmos
+
+
+
+
+
 added grid placement system for towers
+
+-uses a grid system with no collision and checks if a tower can be placed displayer by using gizmos
+
+
 
 added canvas for UI
 
@@ -28,22 +38,32 @@ added canvas for UI
 
 
 
-added wave systems
+added wave progression system
 
-added progression system
+-wave system that spawns in more enemies when all previous enemies are dead
+
+-reward for completing a wave
+
+
 
 added debugging materials
 
--Red
+-Red(Enemy)
 
--Green
+-Green(Enemy)
 
--Yellow
--Blue
+-Yellow(Tower)
+-Blue(Enemy)
 
 
 
 added core system
 
+-core system deciding if the player loses, just tracks if an enemy has reach the end(not this script) and updates the core health
+
+
+
 added economy system
+
+-tracks players money or "data" to use for tower purchases
 
