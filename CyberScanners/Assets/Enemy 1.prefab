@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6390543051365252771}
   - component: {fileID: 5015476948044245855}
   - component: {fileID: 3276211103154864584}
-  - component: {fileID: 8456167819693708979}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -90,27 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8456167819693708979
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4422912434455956646}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8726626184490083832
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +99,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3168820186201968928}
   - component: {fileID: 747787332637190898}
+  - component: {fileID: 2208866354223875134}
   m_Layer: 0
   m_Name: Enemy 1
   m_TagString: Untagged
@@ -156,10 +135,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72fd8a8c7dd598b4788cff3789d10c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxHealth: 100
-  moveSpeed: 2
+  maxHealth: 25
+  moveSpeed: 2.5
   dataReward: 10
+  currentHealth: 25
   path: {fileID: 0}
   economy: {fileID: 0}
-  damageToCore: 10
+  damageToCore: 1
   core: {fileID: 0}
+  spawnOnDeath: []
+--- !u!65 &2208866354223875134
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8726626184490083832}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}

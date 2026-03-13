@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -10,9 +12,13 @@ public class EnemySpawner : MonoBehaviour
     public EnemyPath path;
     public EconomySystem economy;
     public CoreSystem core;
+    public ProgressionSystem progressionSystem;
 
     [Header("Spawn Settings")]
     public float spawnDelay = 0.5f;
+
+    public string targetLayerName = "YourLayerName"; // Set this in the Inspector
+    public List<Tower> objectsInLayerList = new List<Tower>();
 
     void Start()
     {
@@ -24,12 +30,33 @@ public class EnemySpawner : MonoBehaviour
 
         if (spawnPoint == null)
             spawnPoint = this.transform;
+
+        int layerId = LayerMask.NameToLayer(targetLayerName);
+
+        GameObject[] allObjectsInScene = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+        objectsInLayerList = allObjectsInScene
+            .Where(obj => obj.layer == layerId)
+            .Select(obj => obj.GetComponent<Tower>())
+            .Where(t => t != null)
+            .ToList();
     }
 
     public void SpawnWave(int count, float healthScale, float speedScale)
     {
         // Start a coroutine to spawn enemies with delay
         StartCoroutine(SpawnWaveCoroutine(count, healthScale, speedScale));
+        
+        if (objectsInLayerList != null)
+        {
+            foreach (Tower tower in objectsInLayerList)
+            {
+                if (tower.ignoreDamageNerf)
+                {
+                    tower.damage = progressionSystem.currentWave * (int)progressionSystem.enemyHealthMultiplier * tower.damage;
+                }
+            }
+        }
     }
 
     private IEnumerator SpawnWaveCoroutine(int count, float healthScale, float speedScale)

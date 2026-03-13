@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3033e91fae0fbe049a7d1080f94cab63, type: 2}
+  - {fileID: 2100000, guid: e04ff201c1458814c929c533fff1144c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,9 +99,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3168820186201968928}
   - component: {fileID: 747787332637190898}
-  - component: {fileID: 5785303726659704477}
+  - component: {fileID: 8179821281380876295}
   m_Layer: 0
-  m_Name: Enemy 3
+  m_Name: Enemy 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,18 +135,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72fd8a8c7dd598b4788cff3789d10c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxHealth: 20
-  moveSpeed: 5
+  maxHealth: 30
+  moveSpeed: 10
   dataReward: 5
-  currentHealth: 20
+  currentHealth: 30
   path: {fileID: 0}
   economy: {fileID: 0}
-  damageToCore: 2
+  damageToCore: 5
   core: {fileID: 0}
   spawnOnDeath:
+  - enemyPrefab: {fileID: 8726626184490083832, guid: a889573726ce8f74f8d440ab369f4594, type: 3}
+    count: 3
   - enemyPrefab: {fileID: 8726626184490083832, guid: 15339d0ae429fd54e97accdadb92d67f, type: 3}
-    count: 2
---- !u!65 &5785303726659704477
+    count: 10
+--- !u!65 &8179821281380876295
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

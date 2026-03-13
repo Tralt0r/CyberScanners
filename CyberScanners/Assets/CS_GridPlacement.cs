@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class GridPlacement : MonoBehaviour
 {
+    [Header("Tower Selection")]
+    public GameObject selectedTowerPrefab;
     [Header("References")]
     public GridSystem grid;
     public GameObject towerPrefab;
@@ -12,6 +14,8 @@ public class GridPlacement : MonoBehaviour
     public Color hoverColor = new Color(1f, 1f, 0f, 0.3f);
     public Color invalidColor = new Color(1f, 0f, 0f, 0.3f);
 
+
+    public EconomySystem economy;
     private Vector2Int currentTile;
     private bool isValidTile;
 
@@ -53,17 +57,37 @@ public class GridPlacement : MonoBehaviour
 
     void TryPlaceTower()
     {
+        if (selectedTowerPrefab == null) return;
+
         int x = currentTile.x;
         int y = currentTile.y;
 
         if (x < 0 || y < 0 || x >= grid.gridWidth || y >= grid.gridHeight) return;
-
         if (!isValidTile) return;
 
-        Vector3 pos = grid.GetWorldPosition(x, y) + new Vector3(grid.cellSize / 2f, 0, grid.cellSize / 2f);
-        Instantiate(towerPrefab, pos, Quaternion.identity);
+        selectedTowerPrefab.TryGetComponent<Tower>(out Tower towerData);
+        if (towerData.buildCost > economy.currentData)
+        {
+            Debug.Log("Not enough data to build this tower!");
+            return;
+        }
+        else
+        {
+            economy.SpendData(towerData.buildCost);
 
-        grid.SetOccupied(x, y, true);
+            
+            Vector3 pos = grid.GetWorldPosition(x, y) + new Vector3(grid.cellSize / 2f, 0, grid.cellSize / 2f);
+
+            GameObject towerObj = Instantiate(selectedTowerPrefab, pos, Quaternion.identity);
+
+            Tower tower = towerObj.GetComponent<Tower>();
+            if (tower != null)
+            {
+                tower.Initialize(grid, currentTile);
+            }
+
+            grid.SetOccupied(x, y, true);
+        }
     }
 
     void OnDrawGizmos()

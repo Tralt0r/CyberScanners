@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 2;
     public int dataReward = 10;
 
-    private float currentHealth;
+    public float currentHealth;
 
     [Header("Pathing")]
     public EnemyPath path;
@@ -17,6 +18,16 @@ public class Enemy : MonoBehaviour
     [Header("Core Damage")]
     public int damageToCore = 10;
     public CoreSystem core;
+
+    [System.Serializable]
+    public class DeathSpawn
+    {
+        public GameObject enemyPrefab;
+        public int count = 1;
+    }
+
+    [Header("Death Spawn")]
+    public List<DeathSpawn> spawnOnDeath = new List<DeathSpawn>();
 
     void Start()
     {
@@ -66,6 +77,8 @@ public class Enemy : MonoBehaviour
         if (economy != null)
             economy.AddData(dataReward);
 
+        SpawnDeathEnemies();
+
         Destroy(gameObject);
     }
 
@@ -77,5 +90,48 @@ public class Enemy : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    public int GetPathProgress()
+    {
+        return currentWaypoint;
+    }
+    public void SetPathProgress(int waypointIndex)
+    {
+        currentWaypoint = waypointIndex;
+    }
+    void SpawnDeathEnemies()
+    {
+        if (spawnOnDeath == null || spawnOnDeath.Count == 0)
+            return;
+
+        foreach (var spawn in spawnOnDeath)
+        {
+            if (spawn.enemyPrefab == null) continue;
+
+            for (int i = 0; i < spawn.count; i++)
+            {
+                Vector3 offset = Random.insideUnitSphere * 0.3f;
+                offset.y = 0;
+
+                GameObject newEnemy = Instantiate(
+                    spawn.enemyPrefab,
+                    transform.position + offset,
+                    Quaternion.identity
+                );
+
+                Enemy e = newEnemy.GetComponent<Enemy>();
+
+                if (e != null)
+                {
+                    e.path = path;
+                    e.economy = economy;
+                    e.core = core;
+
+                    // 🔥 IMPORTANT PART
+                    e.SetPathProgress(currentWaypoint);
+                }
+            }
+        }
     }
 }
