@@ -19,6 +19,14 @@ public class Enemy : MonoBehaviour
     public int damageToCore = 10;
     public CoreSystem core;
 
+    [Header("Explosion Settings")]
+    public bool explodeOnDeath = false;
+    public float explosionRadius = 2f;
+    public int explosionDamage = 10;
+
+    [Header("Enemy Type")]
+    public int enemyType = 1;
+
     [System.Serializable]
     public class DeathSpawn
     {
@@ -77,8 +85,9 @@ public class Enemy : MonoBehaviour
         if (economy != null)
             economy.AddData(dataReward);
 
+        if (explodeOnDeath)
+            Explode();
         SpawnDeathEnemies();
-
         Destroy(gameObject);
     }
 
@@ -133,5 +142,28 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+    }
+
+    void Explode()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius);
+
+        foreach (Collider hit in hits)
+        {
+            Tower tower = hit.GetComponentInParent<Tower>();
+
+            if (tower != null)
+            {
+                tower.currentHealth -= explosionDamage;
+            }
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!explodeOnDeath) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }

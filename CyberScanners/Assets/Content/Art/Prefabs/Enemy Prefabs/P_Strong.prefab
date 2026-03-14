@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6390543051365252771}
   - component: {fileID: 5015476948044245855}
   - component: {fileID: 3276211103154864584}
-  - component: {fileID: 8456167819693708979}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -29,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.01, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3168820186201968928}
@@ -41,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4422912434455956646}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &3276211103154864584
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -67,8 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3033e91fae0fbe049a7d1080f94cab63, type: 2}
-  - {fileID: 2100000, guid: 8485476f61a82fc46a128008976c7222, type: 2}
+  - {fileID: 2100000, guid: 6059c979bb64591458e63627fcde23aa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,27 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8456167819693708979
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4422912434455956646}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8726626184490083832
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,9 +98,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3168820186201968928}
-  - component: {fileID: 13109830079244050}
-  m_Layer: 6
-  m_Name: P_ShortTower
+  - component: {fileID: 747787332637190898}
+  - component: {fileID: 5749157317902299245}
+  m_Layer: 0
+  m_Name: P_Strong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,13 +117,13 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 1, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6390543051365252771}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &13109830079244050
+--- !u!114 &747787332637190898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,68 +132,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 8726626184490083832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4160223acbe0fbe4f9af73a107ee05a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 72fd8a8c7dd598b4788cff3789d10c00, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tower
-  progressionSystem: {fileID: 0}
-  enemySpawner: {fileID: 0}
-  towerName: Short Tower
-  maxHealth: 100
-  currentHealth: 100
-  ignoreDamageNerf: 0
-  damage: 24
-  attackSpeed: 10
-  range: 1.6
-  projectilePrefab: {fileID: 6241446114783103747, guid: e602b34e8bb00fc4bb76d40d56bbe938, type: 3}
-  upgradeLevel: 1
-  buildCost: 75
-  sellValue: 75
-  description: Default tower description.
-  upgradePath: Balanced
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  maxHealth: 200
+  moveSpeed: 2
+  dataReward: 20
+  currentHealth: 200
+  path: {fileID: 0}
   economy: {fileID: 0}
-  outline: {fileID: 0}
-  fireCooldown: 0.1
-  projectilePool: {fileID: 0}
-  upgradeLevels:
-  - maxHealthIncrease: 100
-    damageIncrease: 24
-    attackSpeedIncrease: 10
-    rangeIncrease: 1.6
-    description: Default tower description.
-    sellValueIncrase: 150
-    upgradeCost: 200
-  - maxHealthIncrease: 120
-    damageIncrease: 30
-    attackSpeedIncrease: 10
-    rangeIncrease: 1.8
-    description: Default tower description.
-    sellValueIncrase: 250
-    upgradeCost: 300
-  - maxHealthIncrease: 150
-    damageIncrease: 50
-    attackSpeedIncrease: 15
-    rangeIncrease: 2.1
-    description: Default tower description.
-    sellValueIncrase: 350
-    upgradeCost: 400
-  - maxHealthIncrease: 180
-    damageIncrease: 75
-    attackSpeedIncrease: 20
-    rangeIncrease: 2.5
-    description: Default tower description.
-    sellValueIncrase: 550
-    upgradeCost: 600
-  - maxHealthIncrease: 250
-    damageIncrease: 100
-    attackSpeedIncrease: 25
-    rangeIncrease: 3
-    description: Default tower description.
-    sellValueIncrase: 950
-    upgradeCost: 1000
-  - maxHealthIncrease: 250
-    damageIncrease: 150
-    attackSpeedIncrease: 30
-    rangeIncrease: 3.5
-    description: Default tower description.
-    sellValueIncrase: 1000
-    upgradeCost: 0
+  damageToCore: 10
+  core: {fileID: 0}
+  explodeOnDeath: 0
+  explosionRadius: 2
+  explosionDamage: 10
+  enemyType: 1
+  spawnOnDeath:
+  - enemyPrefab: {fileID: 8726626184490083832, guid: 15339d0ae429fd54e97accdadb92d67f, type: 3}
+    count: 1
+  - enemyPrefab: {fileID: 8726626184490083832, guid: 97d2733b41646154db2a994f8b0f4a78, type: 3}
+    count: 1
+--- !u!65 &5749157317902299245
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8726626184490083832}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}

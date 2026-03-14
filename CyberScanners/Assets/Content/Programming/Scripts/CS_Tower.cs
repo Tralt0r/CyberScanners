@@ -47,6 +47,9 @@ public class Tower : MonoBehaviour
     public float fireCooldown = 0f;
     public ProjectilePool projectilePool;
 
+    [Header("Target Types")]
+    public List<int> attackableEnemyTypes = new List<int>();
+
     private List<Enemy> enemies = new List<Enemy>();
     [System.Serializable]
     public class UpgradeLevel
@@ -166,6 +169,9 @@ public class Tower : MonoBehaviour
 
         foreach (Enemy e in allEnemies)
         {
+            if (!attackableEnemyTypes.Contains(e.enemyType))
+                continue;
+
             float dist = Vector3.Distance(transform.position, e.transform.position);
             if (dist > range) continue;
 

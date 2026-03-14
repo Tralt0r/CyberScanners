@@ -17,8 +17,25 @@ public class EnemySpawner : MonoBehaviour
     [Header("Spawn Settings")]
     public float spawnDelay = 0.5f;
 
-    public string targetLayerName = "YourLayerName"; // Set this in the Inspector
+    public string targetLayerName = "YourLayerName";
     public List<Tower> objectsInLayerList = new List<Tower>();
+
+    [System.Serializable]
+    public class EnemyEntry
+    {
+        public GameObject prefab;
+        public int cost = 1;
+        public int minWave = 1;
+    }
+
+    [Header("Enemy Types")]
+    public List<EnemyEntry> enemyTypes = new List<EnemyEntry>();
+
+    [Header("Wave Budget")]
+    public int baseEnemyBudget = 10;
+    public int budgetIncreasePerWave = 5;
+
+
 
     void Start()
     {
@@ -42,11 +59,12 @@ public class EnemySpawner : MonoBehaviour
             .ToList();
     }
 
-    public void SpawnWave(int count, float healthScale, float speedScale)
+    public void SpawnWave(int wave, float healthScale, float speedScale)
     {
-        // Start a coroutine to spawn enemies with delay
-        StartCoroutine(SpawnWaveCoroutine(count, healthScale, speedScale));
-        
+        int budget = baseEnemyBudget + (wave * budgetIncreasePerWave);
+
+        StartCoroutine(SpawnWaveCoroutine(budget, wave, healthScale, speedScale));
+
         if (objectsInLayerList != null)
         {
             foreach (Tower tower in objectsInLayerList)
@@ -59,26 +77,18 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnWaveCoroutine(int count, float healthScale, float speedScale)
+    IEnumerator SpawnWaveCoroutine(int budget, int wave, float healthScale, float speedScale)
     {
-        for (int i = 0; i < count; i++)
+        while (budget > 0)
         {
-            GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
-            Enemy e = enemy.GetComponent<Enemy>();
+            EnemyEntry entry = ChooseEnemy(wave, budget);
 
-            if (e == null)
-            {
-                Debug.LogError("Enemy prefab is missing the Enemy component!");
-            }
-            else
-            {
-                e.maxHealth *= healthScale;
-                e.moveSpeed *= speedScale;
+            if (entry == null)
+                yield break;
 
-                e.path = path;
-                e.economy = economy;
-                e.core = core;
-            }
+            SpawnEnemy(entry.prefab, healthScale, speedScale);
+
+            budget -= entry.cost;
 
             yield return new WaitForSeconds(spawnDelay);
         }
@@ -118,5 +128,25 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return enemyGO;
+    }
+
+    EnemyEntry ChooseEnemy(int wave, int budget)
+    {
+        List<EnemyEntry> valid = enemyTypes
+            .Where(e => e.minWave <= wave && e.cost <= budget)
+            .ToList();
+
+        if (valid.Count == 0)
+            return null;
+
+        // prefer stronger enemies
+        valid.Sort((a, b) => b.cost.CompareTo(a.cost));
+
+        // 70% chance strongest enemy
+        if (Random.value < 0.7f)
+            return valid[0];
+
+        // otherwise random weaker enemy
+        return valid[Random.Range(0, valid.Count)];
     }
 }
