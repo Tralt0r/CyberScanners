@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class GridPlacement : MonoBehaviour
 {
@@ -25,8 +26,11 @@ public class GridPlacement : MonoBehaviour
 
         UpdateMouseTile();
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Input.GetMouseButtonDown(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+
             TryPlaceTower();
         }
     }
@@ -57,6 +61,10 @@ public class GridPlacement : MonoBehaviour
 
     void TryPlaceTower()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         if (selectedTowerPrefab == null) return;
 
         int x = currentTile.x;
