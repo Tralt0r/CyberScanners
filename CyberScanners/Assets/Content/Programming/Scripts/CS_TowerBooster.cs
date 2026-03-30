@@ -11,6 +11,7 @@ public class CS_TowerBooster : MonoBehaviour
     public float damageBoostPercent;
     public float attackSpeedBoostPercent;
     public float rangeBoostPercent;
+    public bool attacksAllEnemies = false;
 
     public float checkInterval = 1f;
 
@@ -63,6 +64,7 @@ public class CS_TowerBooster : MonoBehaviour
                 attackSpeedBoostPercent = 2f;
                 rangeBoostPercent = 2f;
                 boosterRange = 1.6f;
+                attacksAllEnemies = true;
                 break;
 
             case 5:
@@ -101,11 +103,20 @@ public class CS_TowerBooster : MonoBehaviour
             Tower t = hit.GetComponent<Tower>();
 
             if (t == null) continue;
-            if (t == tower) continue; // skip self
+            if (t == tower) continue;
 
             t.damage = Mathf.RoundToInt(t.upgradeLevels[t.upgradeLevel-1].damageIncrease * damageBoostPercent);
             t.attackSpeed = t.upgradeLevels[t.upgradeLevel-1].attackSpeedIncrease * attackSpeedMultiplier;
             t.range =  t.upgradeLevels[t.upgradeLevel-1].rangeIncrease * rangeBoostPercent;
+
+            if (attacksAllEnemies)
+            {
+                if (!t.attackableEnemyTypes.Contains(1))
+                    t.attackableEnemyTypes.Add(1);
+
+                if (!t.attackableEnemyTypes.Contains(2))
+                    t.attackableEnemyTypes.Add(2);
+            }
         }
     }
 

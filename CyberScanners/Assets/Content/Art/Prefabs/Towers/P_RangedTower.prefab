@@ -156,6 +156,9 @@ MonoBehaviour:
   fireCooldown: 0.5
   projectilePool: {fileID: 0}
   attackableEnemyTypes: 0100000002000000
+  explosionRadius: 3
+  explosionDamage: 50
+  explodeOnEnemyInRange: 0
   upgradeLevels:
   - maxHealthIncrease: 100
     damageIncrease: 60

@@ -15,6 +15,12 @@ public class GridSystem : MonoBehaviour
 
     [Header("Optional: Automatic path detection")]
     public EnemyPath enemyPath;
+    public GameObject tileImagePrefab;
+
+    [Header("Tile Visual Settings")]
+    public Vector3 tileOffset = new Vector3(0, 0.01f, 0);
+    public Vector3 tileRotation = new Vector3(90f, 0f, 0f);
+    public float tileScale = 0.1f;
 
     void Awake()
     {
@@ -24,6 +30,33 @@ public class GridSystem : MonoBehaviour
         if (enemyPath != null)
         {
             MarkPathTiles();
+        }
+
+        SpawnImagesOnFreeTiles(); // 👈 add this
+    }
+
+    public void SpawnImagesOnFreeTiles()
+    {
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int y = 0; y < gridHeight; y++)
+            {
+                if (IsPathTile(x, y)) continue;
+                if (IsOccupied(x, y)) continue;
+
+                Vector3 basePos = GetWorldPosition(x, y) 
+                                + new Vector3(cellSize, 0, cellSize) * 0.5f;
+
+                GameObject img = Instantiate(tileImagePrefab, basePos, Quaternion.identity);
+
+                // apply custom transform settings
+                img.transform.position += tileOffset;
+                img.transform.eulerAngles = tileRotation;
+                img.transform.localScale = Vector3.one * tileScale;
+                img.transform.eulerAngles = new Vector3(90f, 0f, 0f);
+
+                img.transform.SetParent(transform);
+            }
         }
     }
 

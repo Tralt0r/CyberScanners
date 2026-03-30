@@ -63,7 +63,35 @@ public class Tower : MonoBehaviour
         public int upgradeCost;
     }
 
+    [Header("Suicide Settings")]
+    public float explosionRadius = 3f; // radius of AoE
+    public int explosionDamage = 50; // damage dealt to enemies
+    public bool explodeOnEnemyInRange = true; // triggers when enemy is detected
+    private bool hasExploded = false;
+
+
+
     public List<UpgradeLevel> upgradeLevels = new List<UpgradeLevel>();
+
+
+    void Explode()
+    {
+        if (hasExploded) return;
+
+        hasExploded = true;
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, range);
+
+        foreach (Collider hit in hits)
+        {
+            Enemy enemy = hit.GetComponentInParent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+        }
+        Sell();
+    }
 
     void Awake()
     {
@@ -189,18 +217,26 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
+        if (hasExploded) return; // stop everything if exploded
+
+        // Check for suicide trigger
+        Enemy targetInRange = FindTarget();
+        if (explodeOnEnemyInRange && targetInRange != null)
+        {
+            Explode();
+            return; // stop further actions this frame
+        }
+
+        // Normal shooting logic
         fireCooldown -= Time.deltaTime;
-
-        if (fireCooldown > 0) return;
-
-        Enemy target = FindTarget();
-
-        if (target == null) return;
-
-        Shoot(target);
-
-        fireCooldown = 1f / attackSpeed;
-
+        if (fireCooldown <= 0)
+        {
+            if (targetInRange != null)
+            {
+                Shoot(targetInRange);
+                fireCooldown = 1f / attackSpeed;
+            }
+        }
     }
 
     void Shoot(Enemy target)
