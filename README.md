@@ -5,6 +5,19 @@
 https://github.com/Tralt0r/CyberScanners
 
 
+\--------------------------------------------------------------------------------------------------------------------
+
+
+3/29/26
+
+Added
+
+\-Bomb Tower - self explodes when enemies in range
+
+\-Tiles that take any space that arent part of the enemy path and give a visual for placable tower spots
+
+\-Visuals showing range of towers when they are selected
+
 
 \--------------------------------------------------------------------------------------------------------------------
 
