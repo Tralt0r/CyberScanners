@@ -1,6 +1,6 @@
 # CyberScanners
 
-
+Bloons Tower Defense inspired game designed to be more challenging and provide more content for players to enjoy.
 
 https://github.com/Tralt0r/CyberScanners
 
