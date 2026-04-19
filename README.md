@@ -4,6 +4,27 @@
 
 https://github.com/Tralt0r/CyberScanners
 
+4/19/26
+
+Changes made to the following scripts
+
+CS_Economy.cs
+
+Added OnDataChanged and OnInsufficientFunds events
+
+CS_SaveSystem.cs
+
+Added OnEnable() and OnDisable()
+Added HandleDataChanged()
+Added Load(): wrapped in try-catch, added null check, added File.
+
+CS_Userinterface.cs
+
+Added OnEnable() and OnDisable()
+Added UpdateDataText()
+Added FlashInsufficientFunds()
+
+
 
 \--------------------------------------------------------------------------------------------------------------------
 

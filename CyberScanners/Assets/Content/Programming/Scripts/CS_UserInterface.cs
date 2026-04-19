@@ -13,20 +13,34 @@ public class GameUI : MonoBehaviour
     public EconomySystem economy;
     public CoreSystem core;
 
-    void Update()
+    void OnEnable()
     {
-        UpdateUI();
+        EconomySystem.OnDataChanged += UpdateDataText;
+        EconomySystem.OnInsufficientFunds += FlashInsufficientFunds;
     }
 
-    void UpdateUI()
+    void OnDisable()
+    {
+        EconomySystem.OnDataChanged -= UpdateDataText;
+        EconomySystem.OnInsufficientFunds -= FlashInsufficientFunds;
+    }
+
+    void Update()
     {
         if (progression != null)
             waveText.text = "Wave: " + progression.currentWave;
 
-        if (economy != null)
-            dataText.text = "Data: " + economy.currentData;
-
         if (core != null)
             coreHealthText.text = "Core Health: " + core.currentHealth;
+    }
+
+    private void UpdateDataText(int newAmount)
+    {
+        dataText.text = "Data: " + newAmount;
+    }
+
+    private void FlashInsufficientFunds()
+    {
+        Debug.Log("[UI] Not enough data!");
     }
 }
