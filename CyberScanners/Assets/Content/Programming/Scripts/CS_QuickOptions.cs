@@ -6,6 +6,7 @@ public class CS_QuickOptions : MonoBehaviour
     public bool godMode = false;
     public bool doubleSpeed = false;
     public bool pauseGame = false;
+    public bool skip5Waves = false;
 
     public void ToggleGodMode()
     {
@@ -30,6 +31,19 @@ public class CS_QuickOptions : MonoBehaviour
     public void leaveGame()
     {
         Debug.Log("Leaving Game...");
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Skip5Waves()
+    {
+        skip5Waves = !skip5Waves;
+        Debug.Log($"Skip 5 Waves: {(skip5Waves ? "ON" : "OFF")}");
+
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Debug.Log("Returning to Main Menu...");
         SceneManager.LoadScene("MainMenu");
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ProgressionSystem : MonoBehaviour
 {
+    public CS_QuickOptions quickOptions;
+
     [Header("Wave Info")]
     public int currentWave = 1;
 
@@ -72,7 +74,15 @@ public class ProgressionSystem : MonoBehaviour
 
         Debug.Log($"Wave {currentWave} Completed. Reward: {reward}");
 
-        currentWave++;
+        if (quickOptions.skip5Waves == true)
+        {
+            currentWave += 5; // Skip 5 additional waves (total 5)
+            Debug.Log("Skipping 5 Waves!");
+        }
+        if (quickOptions.skip5Waves == false)
+        {
+            currentWave++;
+        }
 
         if (core.IsAlive())
         {

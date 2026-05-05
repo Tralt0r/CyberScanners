@@ -19,12 +19,7 @@ public class CoreSystem : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (quickOptions.godMode == false)
-        {
-            Debug.Log("God Mode is ON. No damage taken!");
-            currentHealth -= damage;
-            return;
-        }
+        currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
         Debug.Log($"Core took {damage} damage! Current Health: {currentHealth}");
 
@@ -47,13 +42,22 @@ public class CoreSystem : MonoBehaviour
         {
             loseScreen.SetActive(true);
             delayedMainMenu(3f); // Delay before returning to main menu
+            maxHealth = 100; // Reset health for next game
+        }
+        if (quickOptions.godMode)
+        {
+            maxHealth = 99999;
+            currentHealth = maxHealth;
         }
     }
 
+
+
     IEnumerator delayedMainMenu(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        
         // Load main menu scene here (e.g., using SceneManager.LoadScene)
         SceneManager.LoadScene("MainMenu");
+        yield return new WaitForSeconds(delay);
     }
 }
