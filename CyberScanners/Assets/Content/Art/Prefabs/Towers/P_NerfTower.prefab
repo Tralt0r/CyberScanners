@@ -254,42 +254,42 @@ MonoBehaviour:
   - maxHealthIncrease: 100
     damageIncrease: 0
     attackSpeedIncrease: 0
-    rangeIncrease: 0
+    rangeIncrease: 1
     description: Default tower description.
     sellValueIncrase: 950
     upgradeCost: 1000
   - maxHealthIncrease: 100
     damageIncrease: 0
     attackSpeedIncrease: 0
-    rangeIncrease: 0
+    rangeIncrease: 1
     description: Default tower description.
     sellValueIncrase: 1700
     upgradeCost: 1750
   - maxHealthIncrease: 100
     damageIncrease: 0
     attackSpeedIncrease: 0
-    rangeIncrease: 0
+    rangeIncrease: 1.2
     description: Default tower description.
     sellValueIncrase: 4950
     upgradeCost: 5000
   - maxHealthIncrease: 100
     damageIncrease: 0
     attackSpeedIncrease: 0
-    rangeIncrease: 0
+    rangeIncrease: 1.4
     description: Default tower description.
     sellValueIncrase: 7000
     upgradeCost: 7500
   - maxHealthIncrease: 100
     damageIncrease: 0
     attackSpeedIncrease: 0
-    rangeIncrease: 0
+    rangeIncrease: 1.6
     description: Default tower description.
     sellValueIncrase: 9500
     upgradeCost: 10000
   - maxHealthIncrease: 100
     damageIncrease: 0
     attackSpeedIncrease: 0
-    rangeIncrease: 0
+    rangeIncrease: 2
     description: Default tower description.
     sellValueIncrase: 10000
     upgradeCost: 0
